@@ -3,83 +3,7 @@ from selenium.webdriver.common.by import By
 import unittest
 import time
 import sys
-
-# Location Options 
-locations = [
-    '', 
-    'All States',
-    'Alabama',
-    'Alaska',
-    'Arizona',
-    'Arkansas',
-    'California',
-    'Colorado',
-    'Connecticut',
-    'Delaware',
-    'District of Columbia',
-    'Florida',
-    'Georgia',
-    'Hawaii',
-    'Idaho',
-    'Illinois',
-    'Indiana',
-    'Iowa',
-    'Kansas',
-    'Kentucky',
-    'Louisiana',
-    'Maine',
-    'Maryland',
-    'Massachusetts',
-    'Michigan',
-    'Minnesota',
-    'Mississippi',
-    'Missouri',
-    'Montana',
-    'Nebraska',
-    'Nevada',
-    'New Hampshire',
-    'New Jersey',
-    'New Mexico',
-    'New York',
-    'North Carolina',
-    'North Dakota',
-    'Ohio',
-    'Oklahoma',
-    'Oregon',
-    'Pennsylvania',
-    'Rhode Island',
-    'South Carolina',
-    'South Dakota',
-    'Tennessee',
-    'Texas',
-    'Utah',
-    'Vermont',
-    'Virginia',
-    'Washington',
-    'West Virginia',
-    'Wisconsin',
-    'Wyoming'
-]
-
-
-# Inputs to test
-firstName_input = "Jane"
-lastName_input = "Doe" 
-location_input = locations.index("Alaska")
-city_input = "" #OPTIONAL 
-
-# XPATH to elements on webpage
-# Placed here for easier editing
-form_XPATH = "//*[@id=\"topfrm\"]"
-firstName_XPATH = "/html/body/div[1]/div[1]/div[3]/div[1]/div[2]/form/input[3]"
-lastName_XPATH = "/html/body/div[1]/div[1]/div[3]/div[1]/div[2]/form/input[4]"
-locationOption_XPATH = "/html/body/div[1]/div[1]/div[3]/div[1]/div[2]/form/select/option[" + str(location_input) + "]"
-submit_XPATH = "/html/body/div[1]/div[1]/div[3]/div[1]/div[2]/form/button"
-
-cityOption_XPATH = "/html/body/div[1]/div[1]/section/div[2]/div/div/div/form/div[2]/input"
-submitCityOption_XPATH = "/html/body/div[1]/div[1]/section/div[2]/div/div/div/form/div[3]/button[1]"
-
-results_XPATH = "/html/body/div[1]/div[1]/section/div/section/div[1]/div[2]/div/div[1]/h1"
+from locations import locations
 
 
 class GoLookupSearch(unittest.TestCase): 
@@ -142,11 +66,48 @@ class GoLookupSearch(unittest.TestCase):
         results = self.driver.find_element(By.XPATH, results_XPATH)        
         results_text = results.text
         print(results_text)
+        webpage = self.driver.page_source
+        with open("webpage.html", "w", encoding="utf-8") as file:
+            file.write(webpage)
+
 
         time.sleep(10)
     def tearDown(self):
         self.driver.quit()
 
+def test_suit():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(GoLookupSearch))
+    return suite
+
 if __name__ == "__main__":
-    unittest.main()
-    
+    if len(sys.argv) < 4:
+        print("python scraper.py <first_name> <last_name> <US State> <City>(Optional)")
+        sys.exit(1)
+
+    # Inputs to test
+    firstName_input = sys.argv[1]
+    lastName_input = sys.argv[2] 
+    location_input = locations.index(sys.argv[3].title())
+
+    if len(sys.argv) == 5: 
+        city_input = sys.argv[4]
+    else:
+        city_input = ""
+
+    # XPATH to elements on webpage
+    # Placed here for easier editing
+    form_XPATH = "//*[@id=\"topfrm\"]"
+    firstName_XPATH = "/html/body/div[1]/div[1]/div[3]/div[1]/div[2]/form/input[3]"
+    lastName_XPATH = "/html/body/div[1]/div[1]/div[3]/div[1]/div[2]/form/input[4]"
+    locationOption_XPATH = "/html/body/div[1]/div[1]/div[3]/div[1]/div[2]/form/select/option[" + str(location_input) + "]"
+    submit_XPATH = "/html/body/div[1]/div[1]/div[3]/div[1]/div[2]/form/button"
+
+    cityOption_XPATH = "/html/body/div[1]/div[1]/section/div[2]/div/div/div/form/div[2]/input"
+    submitCityOption_XPATH = "/html/body/div[1]/div[1]/section/div[2]/div/div/div/form/div[3]/button[1]"
+
+    results_XPATH = "/html/body/div[1]/div[1]/section/div/section/div[1]/div[2]/div/div[1]/h1"
+
+    suite = test_suit()
+    runner = unittest.TextTestRunner()
+    runner.run(suite)

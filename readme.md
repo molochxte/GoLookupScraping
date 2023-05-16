@@ -8,9 +8,17 @@ http://localhost:4444/ui#/sessions
 Look at video feed in localhost. (Default password is 'Secret')
 
 ---
+# DevLog // Notes
 
-## Entering First Name // Last Name into Form
+## Selenium: Finding Form Elements
 Had trouble finding xPath.. used an extension to locate it. 
 The downside of using an exact path like this is it will run into an error if the webpage structure ever changes.
 https://addons.mozilla.org/en-US/firefox/addon/xpath_finder/
 
+## UnitTests
+I decided to use unittests:
+- to make it easier to fix errors
+- don't need to open selenium view to see progress
+
+## Next Up:
+- Need to find a way to process results
