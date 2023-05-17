@@ -22,3 +22,7 @@ I decided to use unittests:
 
 ## Next Up:
 - Need to find a way to process results
+
+## Issues
+- web_processor.py prints out Education Records twice
+
