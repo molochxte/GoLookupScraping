@@ -15,4 +15,6 @@ python3 scraper.py Jane Doe22 Alabama && python3 webpage_processor.py >> log.txt
 
 # expecting: error due to incorrect number of args
 python3 scraper.py Jane Doe && python3 webpage_processor.py >> log.txt
-python3 scraper.py Jane && python3 webpage_processor.py >> log.txt
+python3 scraper.py Jane Doe Alabama Boise Hello && python3 webpage_processor.py >> log.txt
+
+
