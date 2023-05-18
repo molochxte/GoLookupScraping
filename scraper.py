@@ -3,8 +3,8 @@ from selenium.webdriver.common.by import By
 import unittest
 import time
 import sys
-from locations import locations
-
+from locations import locations 
+import re #verify valid input with regex
 
 class GoLookupSearch(unittest.TestCase): 
     def setUp(self):
@@ -57,19 +57,24 @@ class GoLookupSearch(unittest.TestCase):
         if city_input != "":
             city_Form = self.driver.find_element(By.XPATH,cityOption_XPATH)
             city_Form.send_keys(city_input)
-            submitCity_Form = self.driver.find_element(By.XPATH)
+            submitCity_Form = self.driver.find_element(By.XPATH, submitCityOption_XPATH)
             submitCity_Form.click()
 
         time.sleep(30)
 
         # VIEW RESULTS
-        results = self.driver.find_element(By.XPATH, results_XPATH)        
-        results_text = results.text
-        print(results_text)
+        try:
+            found_results = self.driver.find_element(By.XPATH, results_XPATH) 
+            print(found_results.text)
+        except:
+            # no records found
+            result_message = self.driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[2]/div/div/div/div")
+            print(result_message.text) 
+        
+        # save webpage regardless
         webpage = self.driver.page_source
         with open("webpage.html", "w", encoding="utf-8") as file:
             file.write(webpage)
-
 
         time.sleep(10)
     def tearDown(self):
@@ -81,19 +86,35 @@ def test_suit():
     return suite
 
 if __name__ == "__main__":
+    
     if len(sys.argv) < 4:
-        print("python scraper.py <first_name> <last_name> <US State> <City>(Optional)")
+        print(sys.argv[1:])
+        print("Expected: python scraper.py <first_name> <last_name> <US State> <City>(Optional)")
         sys.exit(1)
+    
+    for arg in sys.argv[1:]:
+        if re.search(r'\d|\W', arg):
+           
+            print("Special characters and numbers are not accepted.")
+            sys.exit(1)
+
+    if sys.argv[3] not in locations:
+        print("Recieved:", sys.argv[1:])
+        print("Expected: python scraper.py <first_name> <last_name> <US State> <City>(Optional)")
+        print(sys.argv[4], "is not a state")
+        sys.exit(1)
+
+    if len(sys.argv) == 5: 
+        city_input = sys.argv[4]
+    else:
+        city_input = ""
 
     # Inputs to test
     firstName_input = sys.argv[1]
     lastName_input = sys.argv[2] 
     location_input = locations.index(sys.argv[3].title())
 
-    if len(sys.argv) == 5: 
-        city_input = sys.argv[4]
-    else:
-        city_input = ""
+
 
     # XPATH to elements on webpage
     # Placed here for easier editing

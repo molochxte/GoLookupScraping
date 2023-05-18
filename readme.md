@@ -20,8 +20,11 @@ I decided to use unittests:
 - to make it easier to fix errors
 - don't need to open selenium view to see progress
 
+## inputs.sh
+Used to run multiple inputs and outputs to log.txt
+
 ## Next Up:
-- Need to find a way to process results
+- Need to make errors / output more clear for logging purposes
 
 ## Issues
 - web_processor.py prints out Education Records twice

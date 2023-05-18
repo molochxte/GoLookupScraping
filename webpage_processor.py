@@ -5,6 +5,13 @@ with open('webpage.html') as file:
 
 soup = BeautifulSoup(html_content, 'html.parser')
 
+def isRecordsFound():
+    div_element = soup.find('div', class_="alert alert-danger")
+    if div_element is not None:
+        return False
+    else:
+        return True
+
 def getNumberOfResults():
     div_element = soup.find('h1', class_="text-white text-left-mobile text-center mt-0 mb-0 title-padding")
     strong_element = div_element.find('strong')
@@ -28,25 +35,20 @@ def getResultsTable():
         location = div_element.get('data-location')
         person_enc = div_element.get('data-person-enc')
         persons_dict[person_enc] = [first_name, last_name, age, location]
-        
-        # Print the extracted data
-        # print("========================")
-        # print("First Name:", first_name)
-        # print("Last Name:", last_name)
-        # print("Age:", age)
-        # print("Location:", location)
-        # #print("Person Enc:", person_enc)
-
     return persons_dict
 
-        
-
 if __name__ == "__main__":
-    print(getNumberOfResults())
-    print("========================")
-    print(getResultCategoryCount())
-    print("========================")
-    results_table = getResultsTable()
 
-    for person_id, info in results_table.items():
-        print(info)
+    recordsFound = isRecordsFound()
+    
+    if recordsFound: 
+        print(getNumberOfResults())
+        print("========================")
+        print(getResultCategoryCount())
+        print("========================")
+        results_table = getResultsTable()
+
+        for person_id, info in results_table.items():
+            print(info)
+    else:
+        print("No Records Found")
