@@ -16,3 +16,21 @@ Education Records: 64
 ['Jane', 'Doe', '', '1738 30th Street Ensley; Birmingham, AL 35208-1519']
 ['Jane', 'Doe', '', '9208 Bella Vista Ln; Oklahoma City, OK 73131-8204']
 No Records Found
+7
+========================
+Court Records: 65
+Contact Profiles: 14
+Personal Assets: 58
+Licenses & Permits: 66
+Marriages & Divorces: 14
+Education Records: 64
+Education Records: 64
+========================
+['Jane', 'Doe', '23', '']
+['Jane', 'Doe', '38', '']
+['Jane', 'Doe', '65', '525 N Main St; Alpharetta, GA 30009-2325']
+['Jane', 'Doe', '68', '123 Main NE Rd; Huntsville, AL 35811-2503']
+['Jane', 'Doe', '82', '1800 Montclaire Ln; Vestavia Hills, AL 35216-1816']
+['Jane', 'Doe', '', '1738 30th Street Ensley; Birmingham, AL 35208-1519']
+['Jane', 'Doe', '', '9208 Bella Vista Ln; Oklahoma City, OK 73131-8204']
+No Records Found

@@ -87,7 +87,7 @@ def test_suit():
 
 if __name__ == "__main__":
     
-    if len(sys.argv) < 4:
+    if len(sys.argv) < 4 or len(sys.argv) > 5:
         print(sys.argv[1:])
         print("Expected: python scraper.py <first_name> <last_name> <US State> <City>(Optional)")
         sys.exit(1)
@@ -113,8 +113,6 @@ if __name__ == "__main__":
     firstName_input = sys.argv[1]
     lastName_input = sys.argv[2] 
     location_input = locations.index(sys.argv[3].title())
-
-
 
     # XPATH to elements on webpage
     # Placed here for easier editing
